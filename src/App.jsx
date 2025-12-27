@@ -18,6 +18,7 @@ function App() {
           Add
         </button>
       </form>
+
       <form className="todo__form">
         <div className="todo__field field">
           <label className="field__label" htmlFor="search-task">
@@ -32,6 +33,7 @@ function App() {
           />
         </div>
       </form>
+
       <div className="todo__info">
         <div className="todo__total-tasks">
           Total tasks: <span>0</span>
@@ -40,6 +42,7 @@ function App() {
           Delete all
         </button>
       </div>
+
       <ul className="todo__list">
         <li className="todo__item todo-item">
           <input
@@ -101,6 +104,7 @@ function App() {
           </button>
         </li>
       </ul>
+      
       <div className="todo__empty-message"></div>
     </div>
   );
