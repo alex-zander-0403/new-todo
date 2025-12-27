@@ -1,3 +1,5 @@
+import TodoItem from "./TodoItem";
+
 function TodoList() {
   const hasTasks = true;
 
