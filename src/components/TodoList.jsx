@@ -1,6 +1,8 @@
 import TodoItem from "./TodoItem";
 
-function TodoList() {
+function TodoList(props) {
+  const { tasks = [] } = props;
+
   const hasTasks = true;
 
   if (!hasTasks) {
@@ -9,30 +11,15 @@ function TodoList() {
 
   return (
     <ul className="todo__list">
-      <TodoItem
-        className="todo__item"
-        id="task-1"
-        title="Встават"
-        isDone={false}
-      />
-      <TodoItem
-        className="todo__item"
-        id="task-2"
-        title="Пресс качат"
-        isDone={false}
-      />
-      <TodoItem
-        className="todo__item"
-        id="task-3"
-        title="Бегит"
-        isDone={false}
-      />
-      <TodoItem
-        className="todo__item"
-        id="task-4"
-        title="Анжуманя"
-        isDone={false}
-      />
+      {tasks.map((task) => (
+        <TodoItem
+          key={task.id}
+          className="todo__item"
+          id={task.id}
+          title={task.title}
+          isDone={task.isDone}
+        />
+      ))}
     </ul>
   );
 }
