@@ -3,18 +3,20 @@ import SearchTaskForm from "./SearchTaskForm";
 import TodoInfo from "./TodoInfo";
 import TodoList from "./TodoList";
 
-function Todo() {
-  //
-  // data
-  const tasks = [
-    { id: "task-1", title: "Встават", isDone: true },
-    { id: "task-2", title: "Бегит", isDone: true },
-    { id: "task-3", title: "Пресс качат", isDone: false },
-    { id: "task-4", title: "Анжуманя", isDone: false },
-  ];
+// mock data
+const tasks = [
+  { id: "task-1", title: "Встават", isDone: true },
+  { id: "task-2", title: "Бегит", isDone: true },
+  { id: "task-3", title: "Пресс качат", isDone: false },
+  { id: "task-4", title: "Анжуманя", isDone: false },
+];
 
-  const done = tasks.filter((task) => task.isDone === true).length;
-  console.log("done", done);
+function Todo() {
+  const done = tasks.filter((task) => task.isDone === true).length; // кол-во выполненных
+
+  const deleteAllTasks = () => {
+    console.log("deleteAllTasks");
+  };
 
   return (
     <div className="todo">
@@ -23,7 +25,11 @@ function Todo() {
       <AddTaskForm />
       <SearchTaskForm />
 
-      <TodoInfo total={tasks.length} done={done} />
+      <TodoInfo
+        total={tasks.length}
+        done={done}
+        onDeleteAllButtonClick={deleteAllTasks}
+      />
       <TodoList tasks={tasks} />
     </div>
   );
