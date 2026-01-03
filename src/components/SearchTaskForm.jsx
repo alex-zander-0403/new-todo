@@ -1,6 +1,8 @@
 import Field from "./ui/Field";
 
-function SearchTaskForm() {
+function SearchTaskForm(props) {
+  const { onSearch } = props;
+
   return (
     <form className="todo__form">
       <Field
@@ -8,6 +10,7 @@ function SearchTaskForm() {
         id="search-task"
         label="Search task"
         type="search"
+        onChange={(event) => onSearch(event.target.value)}
       />
     </form>
   );
