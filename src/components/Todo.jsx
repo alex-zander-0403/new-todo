@@ -25,6 +25,11 @@ function Todo() {
     console.log("Удалить все задачи!");
   };
 
+  // toggle выполнения задачи
+  const toggleTaskComplete = (taskId, isDone) => {
+    console.log(`Задача ${taskId} ${isDone ? "выполнена" : "активна"}`);
+  };
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
@@ -37,7 +42,11 @@ function Todo() {
         done={done}
         onDeleteAllButtonClick={deleteAllTasks}
       />
-      <TodoList tasks={tasks} onDeleteTaskButtonClick={deleteTask} />
+      <TodoList
+        tasks={tasks}
+        onDeleteTaskButtonClick={deleteTask}
+        onTaskCompleteToggle={toggleTaskComplete}
+      />
     </div>
   );
 }

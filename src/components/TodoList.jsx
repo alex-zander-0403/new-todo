@@ -1,7 +1,7 @@
 import TodoItem from "./TodoItem";
 
 function TodoList(props) {
-  const { tasks = [], onDeleteTaskButtonClick } = props;
+  const { tasks = [], onDeleteTaskButtonClick, onTaskCompleteToggle } = props;
 
   const hasTasks = true;
 
@@ -19,6 +19,7 @@ function TodoList(props) {
           title={task.title}
           isDone={task.isDone}
           onDeleteTaskButtonClick={onDeleteTaskButtonClick}
+          onTaskCompleteToggle={onTaskCompleteToggle}
         />
       ))}
     </ul>

@@ -1,5 +1,12 @@
 function TodoItem(props) {
-  const { className = "", id, title, isDone, onDeleteTaskButtonClick } = props;
+  const {
+    className = "",
+    id,
+    title,
+    isDone,
+    onDeleteTaskButtonClick,
+    onTaskCompleteToggle,
+  } = props;
 
   return (
     <li className={`todo-item ${className}`}>
@@ -8,6 +15,7 @@ function TodoItem(props) {
         id={id}
         type="checkbox"
         checked={isDone}
+        onChange={(event) => onTaskCompleteToggle(id, event.target.checked)}
       />
 
       <label className="todo-item__label" htmlFor={id}>
