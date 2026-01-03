@@ -35,12 +35,17 @@ function Todo() {
     console.log(`Поиск: ${query}`);
   };
 
+  // submit
+  const addTask = () => {
+    console.log(`Задача создана`);
+  };
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
 
-      <AddTaskForm />
-      <SearchTaskForm onSearch={filterTasks}/>
+      <AddTaskForm addTask={addTask} />
+      <SearchTaskForm onSearch={filterTasks} />
 
       <TodoInfo
         total={tasks.length}
@@ -51,7 +56,6 @@ function Todo() {
         tasks={tasks}
         onDeleteTaskButtonClick={deleteTask}
         onTaskCompleteToggle={toggleTaskComplete}
-
       />
     </div>
   );
