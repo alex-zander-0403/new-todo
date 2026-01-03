@@ -1,5 +1,5 @@
 function TodoItem(props) {
-  const { className = "", id, title, isDone } = props;
+  const { className = "", id, title, isDone, onDeleteTaskButtonClick } = props;
 
   return (
     <li className={`todo-item ${className}`}>
@@ -18,6 +18,7 @@ function TodoItem(props) {
         className="todo-item__delete-button"
         aria-label="Delete"
         title="Delete"
+        onClick={() => onDeleteTaskButtonClick(id)}
       >
         <svg
           width="20"

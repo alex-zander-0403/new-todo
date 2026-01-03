@@ -12,10 +12,17 @@ const tasks = [
 ];
 
 function Todo() {
-  const done = tasks.filter((task) => task.isDone === true).length; // кол-во выполненных
+  // кол-во выполненных
+  const done = tasks.filter((task) => task.isDone === true).length;
 
+  // удалить задачу id
+  const deleteTask = (taskId) => {
+    console.log(`Удалить задачу ${taskId}`);
+  };
+
+  // удалить все задачи
   const deleteAllTasks = () => {
-    console.log("deleteAllTasks");
+    console.log("Удалить все задачи!");
   };
 
   return (
@@ -30,7 +37,7 @@ function Todo() {
         done={done}
         onDeleteAllButtonClick={deleteAllTasks}
       />
-      <TodoList tasks={tasks} />
+      <TodoList tasks={tasks} onDeleteTaskButtonClick={deleteTask} />
     </div>
   );
 }
