@@ -1,17 +1,24 @@
+import { useState } from "react";
+
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
 import TodoInfo from "./TodoInfo";
 import TodoList from "./TodoList";
 
 // mock data
-const tasks = [
+const myTasks = [
   { id: "task-1", title: "Встават", isDone: true },
   { id: "task-2", title: "Бегит", isDone: true },
   { id: "task-3", title: "Пресс качат", isDone: false },
   { id: "task-4", title: "Анжуманя", isDone: false },
 ];
 
+// ----------------------------------------------------
+
 function Todo() {
+  const [tasks, setTasks] = useState(myTasks); // tasks
+  const [newTaskTitle, setNewTaskTitle] = useState("");
+
   // кол-во выполненных
   const done = tasks.filter((task) => task.isDone === true).length;
 
@@ -37,14 +44,32 @@ function Todo() {
 
   // submit
   const addTask = () => {
-    console.log(`Задача создана`);
+    if (!newTaskTitle.trim().length) return;
+
+    const newTask = {
+      id: crypto?.randomUUID() ?? Date.now().toString,
+      title: newTaskTitle,
+      isDone: false,
+    };
+
+    setTasks([...tasks, newTask]);
+    setNewTaskTitle("");
+
+    console.log(`Задача ${newTaskTitle} создана`);
   };
+
+  // console.log(newTaskTitle);
 
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
 
-      <AddTaskForm addTask={addTask} />
+      <AddTaskForm
+        addTask={addTask}
+        newTaskTitle={newTaskTitle}
+        setNewTaskTitle={setNewTaskTitle}
+      />
+
       <SearchTaskForm onSearch={filterTasks} />
 
       <TodoInfo
@@ -52,6 +77,7 @@ function Todo() {
         done={done}
         onDeleteAllButtonClick={deleteAllTasks}
       />
+
       <TodoList
         tasks={tasks}
         onDeleteTaskButtonClick={deleteTask}
