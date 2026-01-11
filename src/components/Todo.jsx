@@ -22,19 +22,22 @@ function Todo() {
   // кол-во выполненных
   const done = tasks.filter((task) => task.isDone === true).length;
 
-  // удалить задачу id
+  // удалить задачу по id
   const deleteTask = (taskId) => {
-    console.log(`Удалить задачу ${taskId}`);
+    const filteredTasks = tasks.filter((task) => task.id !== taskId);
+    
+    setTasks(filteredTasks);
+    console.log(`Задача ${taskId} удалена!`);
   };
 
   // удалить все задачи
   const deleteAllTasks = () => {
-    const isConfirm = confirm("Удалить все задачи?");
+    const isConfirm = confirm("Удалить все задачи?!");
 
     if (!isConfirm) return;
 
     setTasks([]);
-    console.log("Удалить все задачи!");
+    console.log("Все задачи удалены!!!");
   };
 
   // toggle выполнения задачи
@@ -62,8 +65,6 @@ function Todo() {
 
     console.log(`Задача ${newTaskTitle} создана`);
   };
-
-  // console.log(newTaskTitle);
 
   return (
     <div className="todo">
