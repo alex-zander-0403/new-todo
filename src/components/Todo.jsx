@@ -16,7 +16,7 @@ const myTasks = [
 // ----------------------------------------------------
 
 function Todo() {
-  const [tasks, setTasks] = useState(myTasks); // tasks
+  const [tasks, setTasks] = useState(myTasks);
   const [newTaskTitle, setNewTaskTitle] = useState("");
 
   // кол-во выполненных
@@ -25,7 +25,7 @@ function Todo() {
   // удалить задачу по id
   const deleteTask = (taskId) => {
     const filteredTasks = tasks.filter((task) => task.id !== taskId);
-    
+
     setTasks(filteredTasks);
     console.log(`Задача ${taskId} удалена!`);
   };
@@ -42,7 +42,13 @@ function Todo() {
 
   // toggle выполнения задачи
   const toggleTaskComplete = (taskId, isDone) => {
-    console.log(`Задача ${taskId} ${isDone ? "выполнена" : "активна"}`);
+    const changedTasks = tasks.map((task) => {
+      return task.id === taskId ? { ...task, isDone } : task;
+    });
+
+    setTasks(changedTasks);
+
+    console.log(`Задача ${taskId} ${isDone}`);
   };
 
   // поиск

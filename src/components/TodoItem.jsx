@@ -15,7 +15,11 @@ function TodoItem(props) {
         id={id}
         type="checkbox"
         checked={isDone}
-        onChange={(event) => onTaskCompleteToggle(id, event.target.checked)}
+        onChange={(event) => {
+          // console.log("id", id);
+          // console.log("isDone", isDone);
+          onTaskCompleteToggle(id, event.target.checked);
+        }}
       />
 
       <label className="todo-item__label" htmlFor={id}>
