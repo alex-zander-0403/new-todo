@@ -16,8 +16,19 @@ const myTasks = [
 // ----------------------------------------------------
 
 function Todo() {
-  const [tasks, setTasks] = useState(myTasks);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+
+    if (savedTasks) {
+      return JSON.parse(savedTasks);
+    }
+
+    return myTasks;
+  });
+
   const [newTaskTitle, setNewTaskTitle] = useState("");
+
+  // ---
 
   // кол-во выполненных
   const done = tasks.filter((task) => task.isDone === true).length;
@@ -73,17 +84,7 @@ function Todo() {
   };
 
   useEffect(() => {
-    const savedTasks = localStorage.getItem("tasks");
-
-    if (savedTasks) {
-      setTasks(JSON.parse(savedTasks));
-    }
-    console.log("getEffect");
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
-    console.log("setEffect");
   }, [tasks]);
 
   return (
