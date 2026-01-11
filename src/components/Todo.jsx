@@ -29,6 +29,11 @@ function Todo() {
 
   // удалить все задачи
   const deleteAllTasks = () => {
+    const isConfirm = confirm("Удалить все задачи?");
+
+    if (!isConfirm) return;
+
+    setTasks([]);
     console.log("Удалить все задачи!");
   };
 
