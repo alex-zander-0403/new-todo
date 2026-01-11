@@ -3,8 +3,8 @@ function Field(props) {
     id,
     className = "",
     type = "text",
-    value = "",
     label,
+    value = "",
     onChange,
   } = props;
 

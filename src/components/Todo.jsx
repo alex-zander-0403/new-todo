@@ -27,6 +27,8 @@ function Todo() {
   });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  // console.log("searchQuery", searchQuery);
 
   // ---
 
@@ -62,11 +64,6 @@ function Todo() {
     console.log(`Задача ${taskId} ${isDone}`);
   };
 
-  // поиск
-  const filterTasks = (query) => {
-    console.log(`Поиск: ${query}`);
-  };
-
   // submit
   const addTask = () => {
     if (!newTaskTitle.trim().length) return;
@@ -87,6 +84,14 @@ function Todo() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  const clearSearchQuery = searchQuery.trim().toLowerCase();
+  const filteredTasks =
+    clearSearchQuery.length > 0
+      ? tasks.filter((task) =>
+          task.title.toLowerCase().includes(clearSearchQuery)
+        )
+      : null;
+
   return (
     <div className="todo">
       <h1 className="todo__title">To Do List</h1>
@@ -97,7 +102,10 @@ function Todo() {
         setNewTaskTitle={setNewTaskTitle}
       />
 
-      <SearchTaskForm onSearch={filterTasks} />
+      <SearchTaskForm
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+      />
 
       <TodoInfo
         total={tasks.length}
@@ -107,6 +115,7 @@ function Todo() {
 
       <TodoList
         tasks={tasks}
+        filteredTasks={filteredTasks}
         onDeleteTaskButtonClick={deleteTask}
         onTaskCompleteToggle={toggleTaskComplete}
       />

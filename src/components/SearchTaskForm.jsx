@@ -1,16 +1,17 @@
 import Field from "./ui/Field";
 
 function SearchTaskForm(props) {
-  const { onSearch } = props;
+  const { searchQuery, setSearchQuery } = props;
 
   return (
     <form className="todo__form" onSubmit={(event) => event.preventDefault()}>
       <Field
-        className="todo__field"
         id="search-task"
-        label="Search task"
+        className="todo__field"
         type="search"
-        onChange={(event) => onSearch(event.target.value)}
+        label="Search task"
+        value={searchQuery}
+        onChange={(event) => setSearchQuery(event.target.value)}
       />
     </form>
   );
