@@ -1,11 +1,12 @@
 function Field(props) {
   const {
-    id,
     className = "",
+    id,
     type = "text",
     label,
     value = "",
     onChange,
+    ref,
   } = props;
 
   return (
@@ -22,6 +23,7 @@ function Field(props) {
         value={value}
         autoComplete="off"
         onChange={onChange}
+        ref={ref}
       />
     </div>
   );

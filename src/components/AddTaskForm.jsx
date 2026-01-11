@@ -2,7 +2,7 @@ import Button from "./ui/Button";
 import Field from "./ui/Field";
 
 function AddTaskForm(prop) {
-  const { addTask, newTaskTitle, setNewTaskTitle } = prop;
+  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } = prop;
 
   // кастомный submit
   const onSubmit = (event) => {
@@ -17,6 +17,7 @@ function AddTaskForm(prop) {
         id="new-task"
         label="New task title"
         value={newTaskTitle}
+        ref={newTaskInputRef}
         onChange={(e) => setNewTaskTitle(e.target.value)}
       />
 

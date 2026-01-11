@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
@@ -27,8 +27,8 @@ function Todo() {
   });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
+  const newTaskInputRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
-  // console.log("searchQuery", searchQuery);
 
   // ---
 
@@ -77,13 +77,16 @@ function Todo() {
     setTasks([...tasks, newTask]);
     setNewTaskTitle("");
     setSearchQuery("");
-
-    console.log(`Задача ${newTaskTitle} создана`);
+    newTaskInputRef.current.focus();
   };
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
+
+  useEffect(() => {
+    newTaskInputRef.current.focus();
+  });
 
   const clearSearchQuery = searchQuery.trim().toLowerCase();
   const filteredTasks =
@@ -101,6 +104,7 @@ function Todo() {
         addTask={addTask}
         newTaskTitle={newTaskTitle}
         setNewTaskTitle={setNewTaskTitle}
+        newTaskInputRef={newTaskInputRef}
       />
 
       <SearchTaskForm
