@@ -4,6 +4,7 @@ import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
 import TodoInfo from "./TodoInfo";
 import TodoList from "./TodoList";
+import Button from "./ui/Button";
 
 // mock data
 const myTasks = [
@@ -27,8 +28,10 @@ function Todo() {
   });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
-  const newTaskInputRef = useRef(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const newTaskInputRef = useRef(null);
+  const firstIncompleteTaskRef = useRef(null);
+  const firstIncompleteTaskId = tasks.find((task) => task.isDone === false)?.id;
 
   // ---
 
@@ -118,12 +121,35 @@ function Todo() {
         onDeleteAllButtonClick={deleteAllTasks}
       />
 
+      <Button
+        onClick={() => {
+          firstIncompleteTaskRef.current?.scrollIntoView({
+            behavior: "smooth",
+          });
+        }}
+      >
+        Первая невыполненная
+      </Button>
+
       <TodoList
         tasks={tasks}
         filteredTasks={filteredTasks}
         onDeleteTaskButtonClick={deleteTask}
         onTaskCompleteToggle={toggleTaskComplete}
+        firstIncompleteTaskRef={firstIncompleteTaskRef}
+        firstIncompleteTaskId={firstIncompleteTaskId}
       />
+
+      <Button
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: "smooth",
+          });
+        }}
+      >
+        Наверх
+      </Button>
     </div>
   );
 }

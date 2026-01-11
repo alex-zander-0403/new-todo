@@ -6,18 +6,17 @@ function TodoItem(props) {
     isDone,
     onDeleteTaskButtonClick,
     onTaskCompleteToggle,
+    ref,
   } = props;
 
   return (
-    <li className={`todo-item ${className}`}>
+    <li className={`todo-item ${className}`} ref={ref}>
       <input
         className="todo-item__checkbox"
         id={id}
         type="checkbox"
         checked={isDone}
         onChange={(event) => {
-          // console.log("id", id);
-          // console.log("isDone", isDone);
           onTaskCompleteToggle(id, event.target.checked);
         }}
       />
