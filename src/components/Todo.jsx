@@ -23,7 +23,7 @@ function Todo() {
       return JSON.parse(savedTasks);
     }
 
-    return myTasks;
+    return [];
   });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -76,6 +76,7 @@ function Todo() {
 
     setTasks([...tasks, newTask]);
     setNewTaskTitle("");
+    setSearchQuery("");
 
     console.log(`Задача ${newTaskTitle} создана`);
   };
