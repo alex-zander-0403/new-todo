@@ -1,7 +1,9 @@
+import { useContext } from "react";
+import { TasksContext } from "../context/TasksContext";
 import Field from "./ui/Field";
 
-function SearchTaskForm(props) {
-  const { searchQuery, setSearchQuery } = props;
+function SearchTaskForm() {
+  const { searchQuery, setSearchQuery } = useContext(TasksContext);
 
   return (
     <form className="todo__form" onSubmit={(event) => event.preventDefault()}>

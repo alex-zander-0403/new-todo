@@ -1,8 +1,11 @@
+import { useContext } from "react";
+import { TasksContext } from "../context/TasksContext";
 import Button from "./ui/Button";
 import Field from "./ui/Field";
 
-function AddTaskForm(prop) {
-  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } = prop;
+function AddTaskForm() {
+  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } =
+    useContext(TasksContext);
 
   // кастомный submit
   const onSubmit = (event) => {
