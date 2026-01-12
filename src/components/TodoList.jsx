@@ -42,14 +42,9 @@ function TodoList() {
         <TodoItem
           key={task.id}
           className="todo__item"
-          ref={
-            task.id === firstIncompleteTaskId ? firstIncompleteTaskRef : null
-          }
           id={task.id}
           title={task.title}
           isDone={task.isDone}
-          onDeleteTaskButtonClick={deleteTask}
-          onTaskCompleteToggle={toggleTaskComplete}
         />
       ))}
     </ul>
