@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from "react";
+import { TasksContext } from "../context/TasksContext";
 
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
@@ -6,25 +7,15 @@ import TodoInfo from "./TodoInfo";
 import TodoList from "./TodoList";
 import Button from "./ui/Button";
 
-// mock data
-const myTasks = [
-  { id: "task-1", title: "Встават", isDone: true },
-  { id: "task-2", title: "Бегит", isDone: true },
-  { id: "task-3", title: "Пресс качат", isDone: false },
-  { id: "task-4", title: "Анжуманя", isDone: false },
-];
-
-// ----------------------------------------------------
-
 function Todo() {
   const [tasks, setTasks] = useState(() => {
     const savedTasks = localStorage.getItem("tasks");
 
-    if (savedTasks) {
-      return JSON.parse(savedTasks);
+    if (!savedTasks) {
+      return [];
     }
 
-    return [];
+    return JSON.parse(savedTasks);
   });
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
@@ -105,63 +96,67 @@ function Todo() {
       : null;
   }, [tasks, searchQuery]);
 
-  // кол-во выполненных
-  const doneTasks = useMemo(() => {
-    return tasks.filter((task) => task.isDone === true).length;
-  }, [tasks]);
-
   return (
-    <div className="todo">
-      <h1 className="todo__title">To Do List</h1>
+    <TasksContext.Provider
+      value={{
+        tasks,
+        filteredTasks,
+        firstIncompleteTaskRef,
+        firstIncompleteTaskId,
 
-      <AddTaskForm
-        addTask={addTask}
-        newTaskTitle={newTaskTitle}
-        setNewTaskTitle={setNewTaskTitle}
-        newTaskInputRef={newTaskInputRef}
-      />
+        deleteTask,
+        deleteAllTasks,
+        toggleTaskComplete,
+      }}
+    >
+      <div className="todo">
+        <h1 className="todo__title">To Do List</h1>
 
-      <SearchTaskForm
-        searchQuery={searchQuery}
-        setSearchQuery={setSearchQuery}
-      />
+        <AddTaskForm
+          addTask={addTask}
+          newTaskTitle={newTaskTitle}
+          setNewTaskTitle={setNewTaskTitle}
+          newTaskInputRef={newTaskInputRef}
+        />
 
-      <TodoInfo
-        total={tasks.length}
-        done={doneTasks}
-        onDeleteAllButtonClick={deleteAllTasks}
-      />
+        <SearchTaskForm
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+        />
 
-      <Button
-        onClick={() => {
-          firstIncompleteTaskRef.current?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
-      >
-        Первая невыполненная
-      </Button>
+        <TodoInfo />
 
-      <TodoList
-        tasks={tasks}
-        filteredTasks={filteredTasks}
-        firstIncompleteTaskRef={firstIncompleteTaskRef}
-        firstIncompleteTaskId={firstIncompleteTaskId}
-        onDeleteTaskButtonClick={deleteTask}
-        onTaskCompleteToggle={toggleTaskComplete}
-      />
+        <Button
+          onClick={() => {
+            firstIncompleteTaskRef.current?.scrollIntoView({
+              behavior: "smooth",
+            });
+          }}
+        >
+          Первая невыполненная
+        </Button>
 
-      <Button
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        }}
-      >
-        Наверх
-      </Button>
-    </div>
+        <TodoList
+        // tasks={tasks}
+        // filteredTasks={filteredTasks}
+        // firstIncompleteTaskRef={firstIncompleteTaskRef}
+        // firstIncompleteTaskId={firstIncompleteTaskId}
+        // onDeleteTaskButtonClick={deleteTask}
+        // onTaskCompleteToggle={toggleTaskComplete}
+        />
+
+        <Button
+          onClick={() => {
+            window.scrollTo({
+              top: 0,
+              behavior: "smooth",
+            });
+          }}
+        >
+          Наверх
+        </Button>
+      </div>
+    </TasksContext.Provider>
   );
 }
 
