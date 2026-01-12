@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 
 import AddTaskForm from "./AddTaskForm";
 import SearchTaskForm from "./SearchTaskForm";
@@ -35,40 +35,43 @@ function Todo() {
 
   // ---
 
-  // кол-во выполненных
-  const done = tasks.filter((task) => task.isDone === true).length;
-
-  // удалить задачу по id
-  const deleteTask = (taskId) => {
-    const filteredTasks = tasks.filter((task) => task.id !== taskId);
-
-    setTasks(filteredTasks);
-    console.log(`Задача ${taskId} удалена!`);
-  };
-
   // удалить все задачи
-  const deleteAllTasks = () => {
+  const deleteAllTasks = useCallback(() => {
     const isConfirm = confirm("Удалить все задачи?!");
 
     if (!isConfirm) return;
 
     setTasks([]);
-    console.log("Все задачи удалены!!!");
-  };
+    // console.log("Все задачи удалены!!!");
+  }, []);
+
+  // удалить задачу по id
+  const deleteTask = useCallback(
+    (taskId) => {
+      const filteredTasks = tasks.filter((task) => task.id !== taskId);
+
+      setTasks(filteredTasks);
+      // console.log(`Задача ${taskId} удалена!`);
+    },
+    [tasks]
+  );
 
   // toggle выполнения задачи
-  const toggleTaskComplete = (taskId, isDone) => {
-    const changedTasks = tasks.map((task) => {
-      return task.id === taskId ? { ...task, isDone } : task;
-    });
+  const toggleTaskComplete = useCallback(
+    (taskId, isDone) => {
+      const changedTasks = tasks.map((task) => {
+        return task.id === taskId ? { ...task, isDone } : task;
+      });
 
-    setTasks(changedTasks);
+      setTasks(changedTasks);
 
-    console.log(`Задача ${taskId} ${isDone}`);
-  };
+      // console.log(`Задача ${taskId} ${isDone}`);
+    },
+    [tasks]
+  );
 
   // submit
-  const addTask = () => {
+  const addTask = useCallback(() => {
     if (!newTaskTitle.trim().length) return;
 
     const newTask = {
@@ -77,11 +80,11 @@ function Todo() {
       isDone: false,
     };
 
-    setTasks([...tasks, newTask]);
+    setTasks((prev) => [...prev, newTask]);
     setNewTaskTitle("");
     setSearchQuery("");
     newTaskInputRef.current.focus();
-  };
+  }, [newTaskTitle]);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -89,15 +92,23 @@ function Todo() {
 
   useEffect(() => {
     newTaskInputRef.current.focus();
-  });
+  }, []);
 
-  const clearSearchQuery = searchQuery.trim().toLowerCase();
-  const filteredTasks =
-    clearSearchQuery.length > 0
+  // новый массив после фильтрации
+  const filteredTasks = useMemo(() => {
+    const clearSearchQuery = searchQuery.trim().toLowerCase();
+
+    return clearSearchQuery.length > 0
       ? tasks.filter((task) =>
           task.title.toLowerCase().includes(clearSearchQuery)
         )
       : null;
+  }, [tasks, searchQuery]);
+
+  // кол-во выполненных
+  const doneTasks = useMemo(() => {
+    return tasks.filter((task) => task.isDone === true).length;
+  }, [tasks]);
 
   return (
     <div className="todo">
@@ -117,7 +128,7 @@ function Todo() {
 
       <TodoInfo
         total={tasks.length}
-        done={done}
+        done={doneTasks}
         onDeleteAllButtonClick={deleteAllTasks}
       />
 
@@ -134,10 +145,10 @@ function Todo() {
       <TodoList
         tasks={tasks}
         filteredTasks={filteredTasks}
-        onDeleteTaskButtonClick={deleteTask}
-        onTaskCompleteToggle={toggleTaskComplete}
         firstIncompleteTaskRef={firstIncompleteTaskRef}
         firstIncompleteTaskId={firstIncompleteTaskId}
+        onDeleteTaskButtonClick={deleteTask}
+        onTaskCompleteToggle={toggleTaskComplete}
       />
 
       <Button
