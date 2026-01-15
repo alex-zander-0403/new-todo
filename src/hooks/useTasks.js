@@ -1,15 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import useLocalStorage from "./useLocalStorage";
 
 function useTasks() {
-  const [tasks, setTasks] = useState(() => {
-    const savedTasks = localStorage.getItem("tasks");
+  const { savedTasks, saveTasks } = useLocalStorage();
 
-    if (!savedTasks) {
-      return [];
-    }
-
-    return JSON.parse(savedTasks);
-  });
+  const [tasks, setTasks] = useState(savedTasks || []);
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -68,7 +63,8 @@ function useTasks() {
   }, [newTaskTitle]);
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
+    // localStorage.setItem("tasks", JSON.stringify(tasks));
+    saveTasks(tasks);
   }, [tasks]);
 
   useEffect(() => {
