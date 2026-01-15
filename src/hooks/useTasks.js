@@ -16,18 +16,27 @@ function useTasks() {
   const deleteAllTasks = useCallback(() => {
     const isConfirm = confirm("Удалить все задачи?!");
 
-    if (!isConfirm) return;
+    if (isConfirm) {
+      setTasks([]);
 
-    setTasks([]);
-    // console.log("Все задачи удалены!!!");
+      Promise.all(
+        tasks.map((task) => {
+          fetch(`http://localhost:3001/tasks/${task.id}`, {
+            method: "DELETE",
+          }).then(() => setTasks([]));
+          // console.log("Все задачи удалены!!!");
+        })
+      );
+    }
   }, []);
 
   // удалить задачу по id
   const deleteTask = useCallback(
     (taskId) => {
-      const filteredTasks = tasks.filter((task) => task.id !== taskId);
+      fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: "DELETE",
+      }).then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
 
-      setTasks(filteredTasks);
       // console.log(`Задача ${taskId} удалена!`);
     },
     [tasks]
@@ -53,7 +62,6 @@ function useTasks() {
       isDone: false,
     };
 
-    // setTasks((prev) => [...prev, newTask]);
     fetch(`http://localhost:3001/tasks`, {
       method: "POST",
       headers: {
@@ -68,11 +76,9 @@ function useTasks() {
         setSearchQuery("");
         newTaskInputRef.current.focus();
       });
-  }, []);
 
-  // useEffect(() => {
-  //   saveTasks(tasks);
-  // }, [tasks]);
+    // console.log(`Задача ${newTask.title} - добавлена`);
+  }, []);
 
   useEffect(() => {
     newTaskInputRef.current.focus();
