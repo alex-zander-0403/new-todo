@@ -47,9 +47,7 @@ function useTasks() {
   );
 
   // добавление
-  const addTask = useCallback(() => {
-    if (!newTaskTitle.trim().length) return;
-
+  const addTask = useCallback((newTaskTitle) => {
     const newTask = {
       id: crypto?.randomUUID() ?? Date.now().toString,
       title: newTaskTitle,
@@ -60,7 +58,7 @@ function useTasks() {
     setNewTaskTitle("");
     setSearchQuery("");
     newTaskInputRef.current.focus();
-  }, [newTaskTitle]);
+  }, []);
 
   useEffect(() => {
     // localStorage.setItem("tasks", JSON.stringify(tasks));

@@ -7,10 +7,16 @@ function AddTaskForm() {
   const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } =
     useContext(TasksContext);
 
+  const clearNewTaskTitle = newTaskTitle.trim();
+  const isNewTaskTitleEmpty = clearNewTaskTitle.length === 0;
+
   // кастомный submit
   const onSubmit = (event) => {
     event.preventDefault();
-    addTask();
+
+    if (!isNewTaskTitleEmpty) {
+      addTask(clearNewTaskTitle);
+    }
   };
 
   return (
@@ -24,10 +30,7 @@ function AddTaskForm() {
         onChange={(e) => setNewTaskTitle(e.target.value)}
       />
 
-      <Button
-        type="submit"
-        isDisabled={newTaskTitle.trim().length === 0 ? true : false}
-      >
+      <Button type="submit" isDisabled={isNewTaskTitleEmpty}>
         +
       </Button>
     </form>
