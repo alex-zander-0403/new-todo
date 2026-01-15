@@ -48,4 +48,23 @@
       background-repeat: no-repeat;
     }
   }
+
+  &.is-invalid {
+    border-color: tomato;
+  }
+}
+
+.field__error {
+  position: absolute;
+  top: 100%;
+  left: 0;
+
+  color: tomato;
+  font-size: 12px;
+
+  /* обрезание лишнего текста в error message */
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 100%;
 }
