@@ -30,14 +30,7 @@ function Todo() {
 
       <TodoList />
 
-      <Button
-        onClick={() => {
-          window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-          });
-        }}
-      >
+      <Button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
         Наверх
       </Button>
     </div>

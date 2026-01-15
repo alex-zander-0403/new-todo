@@ -24,7 +24,12 @@ function AddTaskForm() {
         onChange={(e) => setNewTaskTitle(e.target.value)}
       />
 
-      <Button type="submit">Add</Button>
+      <Button
+        type="submit"
+        isDisabled={newTaskTitle.trim().length === 0 ? true : false}
+      >
+        +
+      </Button>
     </form>
   );
 }

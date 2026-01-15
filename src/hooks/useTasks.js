@@ -46,7 +46,7 @@ function useTasks() {
     [tasks]
   );
 
-  // submit
+  // добавление
   const addTask = useCallback(() => {
     if (!newTaskTitle.trim().length) return;
 
