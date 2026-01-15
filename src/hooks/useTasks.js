@@ -28,7 +28,7 @@ function useTasks() {
         })
       );
     }
-  }, []);
+  }, [tasks]);
 
   // удалить задачу по id
   const deleteTask = useCallback(
@@ -45,11 +45,20 @@ function useTasks() {
   // toggle выполнения задачи
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      const changedTasks = tasks.map((task) => {
-        return task.id === taskId ? { ...task, isDone } : task;
-      });
+      fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ isDone }),
+      }).then(() =>
+        setTasks(
+          tasks.map((task) => {
+            return task.id === taskId ? { ...task, isDone } : task;
+          })
+        )
+      );
 
-      setTasks(changedTasks);
       // console.log(`Задача ${taskId} ${isDone}`);
     },
     [tasks]
