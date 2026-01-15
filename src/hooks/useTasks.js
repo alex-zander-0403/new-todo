@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import useLocalStorage from "./useLocalStorage";
+// import useLocalStorage from "./useLocalStorage";
 
 function useTasks() {
-  const { savedTasks, saveTasks } = useLocalStorage();
+  // const { savedTasks, saveTasks } = useLocalStorage();
 
-  const [tasks, setTasks] = useState(savedTasks || []);
+  const [tasks, setTasks] = useState([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -49,23 +49,37 @@ function useTasks() {
   // добавление
   const addTask = useCallback((newTaskTitle) => {
     const newTask = {
-      id: crypto?.randomUUID() ?? Date.now().toString,
       title: newTaskTitle,
       isDone: false,
     };
 
-    setTasks((prev) => [...prev, newTask]);
-    setNewTaskTitle("");
-    setSearchQuery("");
-    newTaskInputRef.current.focus();
+    // setTasks((prev) => [...prev, newTask]);
+    fetch(`http://localhost:3001/tasks`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newTask),
+    })
+      .then((res) => res.json())
+      .then((addedTask) => {
+        setTasks((prev) => [...prev, addedTask]);
+        setNewTaskTitle("");
+        setSearchQuery("");
+        newTaskInputRef.current.focus();
+      });
   }, []);
 
-  useEffect(() => {
-    saveTasks(tasks);
-  }, [tasks]);
+  // useEffect(() => {
+  //   saveTasks(tasks);
+  // }, [tasks]);
 
   useEffect(() => {
     newTaskInputRef.current.focus();
+
+    fetch(`http://localhost:3001/tasks`)
+      .then((res) => res.json())
+      .then((data) => setTasks(data));
   }, []);
 
   // новый массив после фильтрации
