@@ -10,13 +10,10 @@ function useTasks() {
 
     return JSON.parse(savedTasks);
   });
-
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
   const newTaskInputRef = useRef(null);
-  // const firstIncompleteTaskRef = useRef(null);
-  // const firstIncompleteTaskId = tasks.find((task) => task.isDone === false)?.id;
 
   // ----------
 

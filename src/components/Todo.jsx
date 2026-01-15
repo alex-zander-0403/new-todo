@@ -3,10 +3,12 @@ import SearchTaskForm from "./SearchTaskForm";
 import TodoInfo from "./TodoInfo";
 import TodoList from "./TodoList";
 import Button from "./ui/Button";
-import useIncompleteTaskScroll from "../hooks/useIncompleteTaskScroll";
+
+import { useContext } from "react";
+import { TasksContext } from "../context/TasksContext";
 
 function Todo() {
-  const { firstIncompleteTaskRef } = useIncompleteTaskScroll();
+  const { firstIncompleteTaskRef } = useContext(TasksContext);
 
   return (
     <div className="todo">
@@ -19,11 +21,9 @@ function Todo() {
       <TodoInfo />
 
       <Button
-        onClick={() => {
-          firstIncompleteTaskRef.current?.scrollIntoView({
-            behavior: "smooth",
-          });
-        }}
+        onClick={() =>
+          firstIncompleteTaskRef.current?.scrollIntoView({ behavior: "smooth" })
+        }
       >
         Первая невыполненная
       </Button>
