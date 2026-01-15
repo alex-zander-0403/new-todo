@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import tasksAPI from "../api/tasksApi";
 // import useLocalStorage from "./useLocalStorage";
 
 function useTasks() {
@@ -17,27 +18,16 @@ function useTasks() {
     const isConfirm = confirm("Удалить все задачи?!");
 
     if (isConfirm) {
-      setTasks([]);
-
-      Promise.all(
-        tasks.map((task) => {
-          fetch(`http://localhost:3001/tasks/${task.id}`, {
-            method: "DELETE",
-          }).then(() => setTasks([]));
-          // console.log("Все задачи удалены!!!");
-        })
-      );
+      tasksAPI.deleteAll(tasks).then(() => setTasks([]));
     }
   }, [tasks]);
 
   // удалить задачу по id
   const deleteTask = useCallback(
     (taskId) => {
-      fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: "DELETE",
-      }).then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
-
-      // console.log(`Задача ${taskId} удалена!`);
+      tasksAPI
+        .delete(taskId)
+        .then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
     },
     [tasks]
   );
@@ -45,21 +35,13 @@ function useTasks() {
   // toggle выполнения задачи
   const toggleTaskComplete = useCallback(
     (taskId, isDone) => {
-      fetch(`http://localhost:3001/tasks/${taskId}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ isDone }),
-      }).then(() =>
+      tasksAPI.toggleComplete(taskId, isDone).then(() =>
         setTasks(
           tasks.map((task) => {
             return task.id === taskId ? { ...task, isDone } : task;
           })
         )
       );
-
-      // console.log(`Задача ${taskId} ${isDone}`);
     },
     [tasks]
   );
@@ -71,20 +53,12 @@ function useTasks() {
       isDone: false,
     };
 
-    fetch(`http://localhost:3001/tasks`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newTask),
-    })
-      .then((res) => res.json())
-      .then((addedTask) => {
-        setTasks((prev) => [...prev, addedTask]);
-        setNewTaskTitle("");
-        setSearchQuery("");
-        newTaskInputRef.current.focus();
-      });
+    tasksAPI.add(newTask).then((addedTask) => {
+      setTasks((prev) => [...prev, addedTask]);
+      setNewTaskTitle("");
+      setSearchQuery("");
+      newTaskInputRef.current.focus();
+    });
 
     // console.log(`Задача ${newTask.title} - добавлена`);
   }, []);
@@ -92,9 +66,7 @@ function useTasks() {
   useEffect(() => {
     newTaskInputRef.current.focus();
 
-    fetch(`http://localhost:3001/tasks`)
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
+    tasksAPI.getAll().then(setTasks);
   }, []);
 
   // новый массив после фильтрации
