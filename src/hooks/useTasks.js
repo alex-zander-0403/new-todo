@@ -13,9 +13,12 @@ function useTasks() {
 
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+
   const newTaskInputRef = useRef(null);
-  const firstIncompleteTaskRef = useRef(null);
-  const firstIncompleteTaskId = tasks.find((task) => task.isDone === false)?.id;
+  // const firstIncompleteTaskRef = useRef(null);
+  // const firstIncompleteTaskId = tasks.find((task) => task.isDone === false)?.id;
+
+  // ----------
 
   // удалить все задачи
   const deleteAllTasks = useCallback(() => {
@@ -89,8 +92,6 @@ function useTasks() {
   return {
     tasks,
     filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
 
     deleteTask,
     deleteAllTasks,

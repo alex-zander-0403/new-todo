@@ -1,17 +1,18 @@
 import { createContext } from "react";
 import useTasks from "../hooks/useTasks";
+import useIncompleteTaskScroll from "../hooks/useIncompleteTaskScroll";
 
 //
 export const TasksContext = createContext({});
 
+// глобальный провайдер
 export function TasksProvider(props) {
   const { children } = props;
 
+  // данные по задачам из useTasks
   const {
     tasks,
     filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
 
     deleteTask,
     deleteAllTasks,
@@ -24,6 +25,12 @@ export function TasksProvider(props) {
     newTaskInputRef,
     addTask,
   } = useTasks();
+
+  // данные скролла из useIncompleteTaskScroll
+  const { firstIncompleteTaskRef, firstIncompleteTaskId } =
+    useIncompleteTaskScroll(tasks);
+
+  // ->
 
   return (
     <TasksContext.Provider
