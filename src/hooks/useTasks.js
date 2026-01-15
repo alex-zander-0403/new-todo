@@ -61,7 +61,6 @@ function useTasks() {
   }, []);
 
   useEffect(() => {
-    // localStorage.setItem("tasks", JSON.stringify(tasks));
     saveTasks(tasks);
   }, [tasks]);
 

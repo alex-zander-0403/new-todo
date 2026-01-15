@@ -5,8 +5,9 @@ function Field(props) {
     type = "text",
     label,
     value = "",
-    onChange,
+    error,
     ref,
+    onChange,
   } = props;
 
   return (
@@ -16,7 +17,7 @@ function Field(props) {
       </label>
 
       <input
-        className="field__input"
+        className={`field__input ${error ? "is-invalid" : ""}`}
         id={id}
         type={type}
         placeholder=" "
@@ -25,6 +26,11 @@ function Field(props) {
         onChange={onChange}
         ref={ref}
       />
+      {error && (
+        <span className="field__error" title={error}>
+          {error}
+        </span>
+      )}
     </div>
   );
 }
