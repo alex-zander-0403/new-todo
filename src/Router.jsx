@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// hook useRoute для определения маршрута
+// hook useRoute для хранения и определения пути
 export const useRoute = () => {
   const [path, setPath] = useState(window.location.pathname);
 
@@ -19,14 +19,16 @@ export const useRoute = () => {
   return path;
 };
 
-// компонент 
+// компонент роутер
 function Router(props) {
+  // обьект с {путями: соответствующими компонентами страниц}
   const { routes } = props;
+  // актуальный путь из хука
   const path = useRoute();
+  // создаем ссылку на компонент страницы
+  const CurrentPage = routes[path] ?? routes["*"];
 
-  const Page = routes[path] ?? routes["*"];
-
-  return <Page />;
+  return <CurrentPage />;
 }
 
 export default Router;
