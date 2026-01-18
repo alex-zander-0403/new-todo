@@ -22,6 +22,16 @@ function useTasks() {
     }
   }, [tasks]);
 
+  // получение по id
+  // const getTask = useCallback(
+  //   (taskId) => {
+  //     tasksAPI
+  //       .get(taskId)
+  //       .then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
+  //   },
+  //   [tasks]
+  // );
+
   // удалить задачу по id
   const deleteTask = useCallback(
     (taskId) => {
@@ -84,6 +94,7 @@ function useTasks() {
     tasks,
     filteredTasks,
 
+    // getTask,
     deleteTask,
     deleteAllTasks,
     toggleTaskComplete,

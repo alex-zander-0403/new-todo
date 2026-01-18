@@ -3,10 +3,10 @@ import MainPage from "./pages/MainPage";
 import TaskPage from "./pages/TaskPage";
 
 function App() {
-  // список доступных путь путей
+  // список доступных путей
   const routes = {
     "/": MainPage,
-    "/tasks/123": TaskPage,
+    "/tasks/:id": TaskPage,
     "*": () => <div>404</div>,
   };
 
