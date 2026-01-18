@@ -1,3 +1,5 @@
+import styles from "./Field.module.scss";
+
 function Field(props) {
   const {
     className = "",
@@ -11,13 +13,13 @@ function Field(props) {
   } = props;
 
   return (
-    <div className={`field ${className}`}>
-      <label className="field__label" htmlFor={id}>
+    <div className={`${styles.field} ${className}`}>
+      <label className={styles.field__label} htmlFor={id}>
         {label}
       </label>
 
       <input
-        className={`field__input ${error ? "is-invalid" : ""}`}
+        className={`${styles.field__input} ${error ? styles.isInvalid : ""}`}
         id={id}
         type={type}
         placeholder=" "
@@ -27,7 +29,7 @@ function Field(props) {
         ref={ref}
       />
       {error && (
-        <span className="field__error" title={error}>
+        <span className={styles.field__error} title={error}>
           {error}
         </span>
       )}

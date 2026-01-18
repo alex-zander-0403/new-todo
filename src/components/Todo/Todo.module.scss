@@ -36,7 +36,7 @@
   font-weight: 600;
 }
 
-.todo__delete-all-button {
+.todo__deleteAllButton {
   padding: 0;
   background-color: transparent;
   border: none;
@@ -52,7 +52,7 @@
 }
 
 .todo__list,
-.todo__empty-message {
+.todo__emptyMessage {
   &:empty {
     display: none;
   }
@@ -65,7 +65,7 @@
   row-gap: var(--todoListRowGap);
 }
 
-.todo__empty-message {
+.todo__emptyMessage {
   text-align: center;
   color: var(--color-gray-4);
 }

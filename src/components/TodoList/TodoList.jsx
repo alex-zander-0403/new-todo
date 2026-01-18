@@ -1,24 +1,18 @@
 import { memo, useContext } from "react";
-import TodoItem from "./TodoItem";
-import { TasksContext } from "../context/TasksContext";
+import { TasksContext } from "../../context/TasksContext";
+import TodoItem from "../TodoItem/TodoItem";
 
-function TodoList() {
-  const {
-    tasks,
-    filteredTasks,
-    firstIncompleteTaskRef,
-    firstIncompleteTaskId,
+function TodoList(props) {
+  const { styles } = props;
 
-    deleteTask,
-    toggleTaskComplete,
-  } = useContext(TasksContext);
+  const { tasks, filteredTasks } = useContext(TasksContext);
 
   const hasTasks = tasks.length > 0;
   const isEmptyFilteredtask = filteredTasks?.length === 0;
 
   if (!hasTasks) {
     return (
-      <div className="todo__empty-message">
+      <div className={styles.todo__emptyMessage}>
         <span style={{ fontSize: 50 }}>😎</span>
         <br />
         Задач нет!
@@ -28,7 +22,7 @@ function TodoList() {
 
   if (hasTasks && isEmptyFilteredtask) {
     return (
-      <div className="todo__empty-message">
+      <div className={styles.todo__emptyMessage}>
         <span style={{ fontSize: 50 }}>😐</span>
         <br />
         Ничего не найдено
@@ -37,11 +31,11 @@ function TodoList() {
   }
 
   return (
-    <ul className="todo__list">
+    <ul className={styles.todo__list}>
       {(filteredTasks ?? tasks).map((task) => (
         <TodoItem
           key={task.id}
-          className="todo__item"
+          className={styles.todo__item}
           id={task.id}
           title={task.title}
           isDone={task.isDone}
