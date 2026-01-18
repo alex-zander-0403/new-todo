@@ -1,7 +1,1 @@
-{
-  tasks: [
-    { id: "f712", title: "1", isDone: false },
-    { id: "70f8", title: "2", isDone: false },
-    { id: "7e1f", title: "3", isDone: false },
-  ],
-}
+{tasks:[{id:'f712',title:'1',isDone:true},{id:'70f8',title:'2',isDone:true},{id:'7e1f',title:'3',isDone:true},{id:'42b0',title:'4',isDone:true},{id:'a8a5',title:'5',isDone:false}]}

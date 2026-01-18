@@ -1,5 +1,3 @@
-// import Todo from "./components/Todo";
-// import { TasksProvider } from "./context/TasksContext";
 import Router from "./Router";
 import MainPage from "./pages/MainPage";
 import TaskPage from "./pages/TaskPage";
@@ -12,13 +10,7 @@ function App() {
     "*": () => <div>404</div>,
   };
 
-  return (
-    // <TasksProvider>
-    //   <Todo />
-    // </TasksProvider>
-
-    <Router routes={routes} />
-  );
+  return <Router routes={routes} />;
 }
 
 export default App;

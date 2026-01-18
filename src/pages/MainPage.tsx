@@ -1,8 +1,11 @@
+import { TasksProvider } from "../context/TasksContext";
+import Todo from "../components/Todo";
+
 function MainPage() {
   return (
-    <div>
-      <h1>MainPage</h1>
-    </div>
+    <TasksProvider>
+      <Todo />
+    </TasksProvider>
   );
 }
 
