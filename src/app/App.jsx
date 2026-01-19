@@ -1,6 +1,7 @@
-import Router from "./Router";
-import MainPage from "./pages/MainPage";
-import TaskPage from "./pages/TaskPage";
+import Router from "./routing/Router";
+import MainPage from "../pages/MainPage";
+import TaskPage from "../pages/TaskPage";
+import "./styles";
 
 function App() {
   // список доступных путей
