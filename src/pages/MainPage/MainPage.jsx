@@ -1,5 +1,5 @@
 import { TasksProvider } from "../../context/TasksContext";
-import Todo from "../../components/Todo/Todo";
+import Todo from "../../widgets/Todo";
 
 function MainPage() {
   return (
