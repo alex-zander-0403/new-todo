@@ -1,6 +1,5 @@
 function useCombinedRefs(...refs) {
   return (node) => {
-    
     refs.forEach((ref) => {
       if (!ref) return;
 

@@ -24,6 +24,7 @@ export function TasksProvider(props) {
     setSearchQuery,
     newTaskInputRef,
     addTask,
+    dissapearingTaskId,
   } = useTasks();
 
   // данные скролла из useIncompleteTaskScroll
@@ -50,6 +51,7 @@ export function TasksProvider(props) {
         setSearchQuery,
         newTaskInputRef,
         addTask,
+        dissapearingTaskId,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ function useTasks() {
   const [tasks, setTasks] = useState([]);
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [dissapearingTaskId, setDissapearingTaskId] = useState(null);
 
   const newTaskInputRef = useRef(null);
 
@@ -35,11 +36,15 @@ function useTasks() {
   // удалить задачу по id
   const deleteTask = useCallback(
     (taskId) => {
-      tasksAPI
-        .delete(taskId)
-        .then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
+      tasksAPI.delete(taskId).then(() => {
+        setDissapearingTaskId(taskId);
+        setTimeout(() => {
+          setTasks(tasks.filter((task) => task.id !== taskId));
+          setDissapearingTaskId(null);
+        }, 400);
+      });
     },
-    [tasks]
+    [tasks],
   );
 
   // toggle выполнения задачи
@@ -49,11 +54,11 @@ function useTasks() {
         setTasks(
           tasks.map((task) => {
             return task.id === taskId ? { ...task, isDone } : task;
-          })
-        )
+          }),
+        ),
       );
     },
-    [tasks]
+    [tasks],
   );
 
   // добавление
@@ -85,7 +90,7 @@ function useTasks() {
 
     return clearSearchQuery.length > 0
       ? tasks.filter((task) =>
-          task.title.toLowerCase().includes(clearSearchQuery)
+          task.title.toLowerCase().includes(clearSearchQuery),
         )
       : null;
   }, [tasks, searchQuery]);
@@ -105,6 +110,7 @@ function useTasks() {
     setSearchQuery,
     newTaskInputRef,
     addTask,
+    dissapearingTaskId,
   };
 }
 
