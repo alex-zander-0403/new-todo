@@ -9,6 +9,7 @@ function useTasks() {
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [dissapearingTaskId, setDissapearingTaskId] = useState(null);
+  const [appearingTaskId, setAppearingTaskId] = useState(null);
 
   const newTaskInputRef = useRef(null);
 
@@ -73,6 +74,11 @@ function useTasks() {
       setNewTaskTitle("");
       setSearchQuery("");
       newTaskInputRef.current.focus();
+
+      setAppearingTaskId(addedTask.id);
+      setTimeout(() => {
+        setAppearingTaskId(null)
+      }, 400)
     });
 
     // console.log(`Задача ${newTask.title} - добавлена`);
@@ -111,6 +117,7 @@ function useTasks() {
     newTaskInputRef,
     addTask,
     dissapearingTaskId,
+    appearingTaskId
   };
 }
 

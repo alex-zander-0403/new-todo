@@ -25,14 +25,14 @@ export function TasksProvider(props) {
     newTaskInputRef,
     addTask,
     dissapearingTaskId,
+    appearingTaskId,
   } = useTasks();
 
   // данные скролла из useIncompleteTaskScroll
   const { firstIncompleteTaskRef, firstIncompleteTaskId } =
     useIncompleteTaskScroll(tasks);
 
-  // ->
-
+  //
   return (
     <TasksContext.Provider
       value={{
@@ -52,6 +52,7 @@ export function TasksProvider(props) {
         newTaskInputRef,
         addTask,
         dissapearingTaskId,
+        appearingTaskId,
       }}
     >
       {children}
