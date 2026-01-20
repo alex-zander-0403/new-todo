@@ -1,11 +1,50 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import tasksAPI from "@/shared/api/tasks";
 // import useLocalStorage from "./useLocalStorage";
+
+const tasksReducer = (state, action) => {
+  switch (action.type) {
+    case "SET_ALL": {
+      return Array.isArray(action.tasks) ? action.tasks : state;
+    }
+
+    case "ADD": {
+      return [...state, action.task];
+    }
+
+    case "TOGGLE_COMPLETE": {
+      const { id, isDone } = action;
+
+      return state.map((task) => {
+        return task.id === id ? { ...task, isDone } : task;
+      });
+    }
+
+    case "DELETE_ALL": {
+      return [];
+    }
+
+    case "DELETE": {
+      return state.filter((task) => task.id !== action.id);
+    }
+
+    default: {
+      return state;
+    }
+  }
+};
 
 function useTasks() {
   // const { savedTasks, saveTasks } = useLocalStorage();
 
-  const [tasks, setTasks] = useState([]);
+  const [tasks, dispatch] = useReducer(tasksReducer, []);
   const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [dissapearingTaskId, setDissapearingTaskId] = useState(null);
@@ -20,47 +59,27 @@ function useTasks() {
     const isConfirm = confirm("Удалить все задачи?!");
 
     if (isConfirm) {
-      tasksAPI.deleteAll(tasks).then(() => setTasks([]));
+      tasksAPI.deleteAll(tasks).then(() => dispatch({ type: "DELETE_ALL" }));
     }
   }, [tasks]);
 
-  // получение по id
-  // const getTask = useCallback(
-  //   (taskId) => {
-  //     tasksAPI
-  //       .get(taskId)
-  //       .then(() => setTasks(tasks.filter((task) => task.id !== taskId)));
-  //   },
-  //   [tasks]
-  // );
-
   // удалить задачу по id
-  const deleteTask = useCallback(
-    (taskId) => {
-      tasksAPI.delete(taskId).then(() => {
-        setDissapearingTaskId(taskId);
-        setTimeout(() => {
-          setTasks(tasks.filter((task) => task.id !== taskId));
-          setDissapearingTaskId(null);
-        }, 400);
-      });
-    },
-    [tasks],
-  );
+  const deleteTask = useCallback((taskId) => {
+    tasksAPI.delete(taskId).then(() => {
+      setDissapearingTaskId(taskId);
+      setTimeout(() => {
+        dispatch({ type: "DELETE", id: taskId });
+        setDissapearingTaskId(null);
+      }, 400);
+    });
+  }, []);
 
   // toggle выполнения задачи
-  const toggleTaskComplete = useCallback(
-    (taskId, isDone) => {
-      tasksAPI.toggleComplete(taskId, isDone).then(() =>
-        setTasks(
-          tasks.map((task) => {
-            return task.id === taskId ? { ...task, isDone } : task;
-          }),
-        ),
-      );
-    },
-    [tasks],
-  );
+  const toggleTaskComplete = useCallback((taskId, isDone) => {
+    tasksAPI
+      .toggleComplete(taskId, isDone)
+      .then(() => dispatch({ type: "TOGGLE_COMPLETE", id: taskId, isDone }));
+  }, []);
 
   // добавление
   const addTask = useCallback((newTaskTitle) => {
@@ -70,7 +89,7 @@ function useTasks() {
     };
 
     tasksAPI.add(newTask).then((addedTask) => {
-      setTasks((prev) => [...prev, addedTask]);
+      dispatch({ type: "ADD", task: addedTask });
       setNewTaskTitle("");
       setSearchQuery("");
       newTaskInputRef.current.focus();
@@ -87,7 +106,9 @@ function useTasks() {
   useEffect(() => {
     newTaskInputRef.current.focus();
 
-    tasksAPI.getAll().then(setTasks);
+    tasksAPI.getAll().then((data) => {
+      dispatch({ type: "SET_ALL", tasks: data });
+    });
   }, []);
 
   // новый массив после фильтрации
