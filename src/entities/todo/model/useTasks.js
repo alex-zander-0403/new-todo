@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import tasksAPI from "../../../shared/api/tasks";
+import tasksAPI from "@/shared/api/tasks";
 // import useLocalStorage from "./useLocalStorage";
 
 function useTasks() {

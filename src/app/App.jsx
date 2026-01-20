@@ -1,6 +1,6 @@
 import Router from "./routing/Router";
-import MainPage from "../pages/MainPage";
-import TaskPage from "../pages/TaskPage";
+import MainPage from "@/pages/MainPage";
+import TaskPage from "@/pages/TaskPage";
 import "./styles";
 
 function App() {
