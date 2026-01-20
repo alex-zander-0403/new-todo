@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import tasksAPI from "../../../api/tasksApi";
+import tasksAPI from "../../../shared/api/tasks";
 // import useLocalStorage from "./useLocalStorage";
 
 function useTasks() {
@@ -77,8 +77,8 @@ function useTasks() {
 
       setAppearingTaskId(addedTask.id);
       setTimeout(() => {
-        setAppearingTaskId(null)
-      }, 400)
+        setAppearingTaskId(null);
+      }, 400);
     });
 
     // console.log(`Задача ${newTask.title} - добавлена`);
@@ -117,7 +117,7 @@ function useTasks() {
     newTaskInputRef,
     addTask,
     dissapearingTaskId,
-    appearingTaskId
+    appearingTaskId,
   };
 }
 

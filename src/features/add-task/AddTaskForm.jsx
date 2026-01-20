@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { TasksContext } from "../../entities/todo";
-import Button from "../../components/ui/Button/Button";
-import Field from "../../components/ui/Field/Field";
+import Button from "../../shared/ui/Button";
+import Field from "../../shared/ui/Field";
 
 function AddTaskForm(props) {
   const { styles } = props;
