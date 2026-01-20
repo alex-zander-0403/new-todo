@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { TasksContext } from "../../context/TasksContext";
+import { TasksContext } from "../../entities/todo";
 import Field from "../../components/ui/Field/Field";
 
 function SearchTaskForm(props) {

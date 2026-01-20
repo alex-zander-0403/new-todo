@@ -1,4 +1,4 @@
-import { TasksProvider } from "../../context/TasksContext";
+import { TasksProvider } from "../../entities/todo";
 import Todo from "../../widgets/Todo";
 
 function MainPage() {
