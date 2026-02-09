@@ -14,7 +14,13 @@ function TodoItem(props) {
     toggleTaskComplete,
     dissapearingTaskId,
     appearingTaskId,
+    searchQuery,
   } = useContext(TasksContext);
+
+  const highlightedTitle = title.replaceAll(
+    searchQuery,
+    `<mark>${searchQuery}</mark>`,
+  );
 
   return (
     <li
@@ -41,7 +47,8 @@ function TodoItem(props) {
       </label>
 
       <RouterLink to={`/tasks/${id}`} aria-label="Task detail page">
-        {title}
+        {/* {title} */}
+        <span dangerouslySetInnerHTML={{ __html: highlightedTitle }}></span>
       </RouterLink>
 
       <button
