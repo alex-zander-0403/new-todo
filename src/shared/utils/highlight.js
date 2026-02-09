@@ -19,7 +19,7 @@ export const highlightCaseInsensitive = (text, query) => {
   const queryFormatted = query.trim(); // чистый результат поиска
 
   // если поиска нет
-  if (queryFormatted === 0) {
+  if (queryFormatted.length === 0) {
     return safeText;
   }
 
