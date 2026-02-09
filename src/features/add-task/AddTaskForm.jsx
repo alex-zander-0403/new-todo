@@ -6,9 +6,9 @@ import Field from "@/shared/ui/Field";
 function AddTaskForm(props) {
   const { styles } = props;
 
-  const { addTask, newTaskTitle, setNewTaskTitle, newTaskInputRef } =
-    useContext(TasksContext);
+  const { addTask, newTaskInputRef } = useContext(TasksContext);
 
+  const [newTaskTitle, setNewTaskTitle] = useState("");
   const [error, setError] = useState("");
 
   const clearNewTaskTitle = newTaskTitle.trim();
@@ -19,7 +19,7 @@ function AddTaskForm(props) {
     event.preventDefault();
 
     if (!isNewTaskTitleEmpty) {
-      addTask(clearNewTaskTitle);
+      (addTask(clearNewTaskTitle), () => setNewTaskTitle(""));
     }
   };
 

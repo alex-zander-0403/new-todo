@@ -1,1 +1,1 @@
-{tasks:[{id:'1377',title:'111',isDone:false},{id:'3764',title:'222',isDone:false},{id:'9271',title:'333',isDone:false},{id:'07b0',title:'отдельные пользовательские фичи',isDone:false},{id:'759c',title:'модули с описанием',isDone:false},{id:'cc8d',title:'общие библиотеки',isDone:false}]}
+{tasks:[{id:'07b0',title:'отдельные пользовательские фичи',isDone:true},{id:'759c',title:'модули с описанием',isDone:false},{id:'cc8d',title:'общие библиотеки',isDone:false}]}

@@ -6,7 +6,6 @@ function useTasks() {
   // const { savedTasks, saveTasks } = useLocalStorage();
 
   const [tasks, setTasks] = useState([]);
-  const [newTaskTitle, setNewTaskTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [dissapearingTaskId, setDissapearingTaskId] = useState(null);
   const [appearingTaskId, setAppearingTaskId] = useState(null);
@@ -63,7 +62,7 @@ function useTasks() {
   );
 
   // добавление
-  const addTask = useCallback((newTaskTitle) => {
+  const addTask = useCallback((newTaskTitle, callbackAfterAdding) => {
     const newTask = {
       title: newTaskTitle,
       isDone: false,
@@ -71,7 +70,7 @@ function useTasks() {
 
     tasksAPI.add(newTask).then((addedTask) => {
       setTasks((prev) => [...prev, addedTask]);
-      setNewTaskTitle("");
+      callbackAfterAdding();
       setSearchQuery("");
       newTaskInputRef.current.focus();
 
@@ -105,13 +104,10 @@ function useTasks() {
     tasks,
     filteredTasks,
 
-    // getTask,
     deleteTask,
     deleteAllTasks,
     toggleTaskComplete,
 
-    newTaskTitle,
-    setNewTaskTitle,
     searchQuery,
     setSearchQuery,
     newTaskInputRef,
